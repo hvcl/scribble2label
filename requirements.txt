@@ -1,0 +1,18 @@
+# Default
+numpy
+scipy
+pathlib2
+tqdm
+
+# Image
+Pillow
+opencv-python
+scikit-image
+scikit-learn
+albumentations
+
+# Tabular
+pandas
+
+# Torch Utils
+segmentation-models-pytorch
