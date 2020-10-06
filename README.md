@@ -23,7 +23,7 @@ ___
 ## License
 
 ```
-Copyright (c) 2020, University of Korea University. Hyeonsoo Lee, Won-ki Jeong.
+Copyright (c) 2020, Korea University. Hyeonsoo Lee, Won-ki Jeong.
 All rights reserved.
 Licensed under the CC BY-NC-SA 4.0 license (https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode).
 
