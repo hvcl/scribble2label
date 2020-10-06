@@ -22,6 +22,26 @@ We also show that our method performs robustly across different levels of scribb
 ___
 ## License
 
+```
+Copyright (c) 2020, University of Korea University. Hyeonsoo Lee, Won-ki Jeong.
+All rights reserved.
+Licensed under the CC BY-NC-SA 4.0 license (https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode).
+
+Permission to use, copy, modify, and distribute this software and its documentation
+for any non-commercial purpose is hereby granted without fee, provided that the above
+copyright notice appear in all copies and that both that copyright notice and this
+permission notice appear in supporting documentation, and that the name of the author
+not be used in advertising or publicity pertaining to distribution of the software
+without specific, written prior permission.
+
+THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING ALL
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR ANY PARTICULAR PURPOSE.
+IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL
+DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
+OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+```
+
 ## Environment Setup
 
 Code has been run and tested on Ubuntu 18.04, Python 3.7, Pytorch 1.5, CUDA 10.0, TITAN X and GTX 1080Ti GPUs.
@@ -54,6 +74,12 @@ Inference Test Data on BBBC038v1 dataset.
 python Inference.py
 ```
 Modalities/Scribble Details/Hyperparameters can be controlled by changing config class in *Inference.py*.
+
+- **Pretrained Weights**
+
+|DSB-Fluo 10%|DSB-Fluo 30%|DSB-Fluo 50%|DSB-Fluo 100%|
+|:---:|:---:|:---:|:---:|
+|[link](https://drive.google.com/file/d/11vWtzi9ippVeGnerW2X1-6tTJt9pdY_u/view?usp=sharing)|[link](https://drive.google.com/file/d/1y8EtLGaEL-tTAjVfGJgy2sRlJkIxUog6/view?usp=sharing)|[link](https://drive.google.com/file/d/1BuyOSrWC7QdlsTXoH2KAIrXL0sxVlDGS/view?usp=sharing)|[link](https://drive.google.com/file/d/1UNrl1p4Z4t05lf7q_zo6XSN9S0-LLS3-/view?usp=sharing)|
 
 ## Citation
 If you use this code, please cite:
