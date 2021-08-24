@@ -7,6 +7,7 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
+import model
 from scripts.dataset import get_transforms, dsbTestDataset
 from segmentation_models_pytorch.unet import Unet
 from scripts.metric_mdice import Evaluator as mdice_evaluator
@@ -15,14 +16,18 @@ from scripts.metric import Evaluator as iou_evaluator
 
 class config:
     seed = 42
-    name = 'fluorescence'
+    name = 'MoNuSeg' # bright_field, histopathology, fluorescence, MoNuSeg, EM
     device = torch.device('cuda:0')
+    proj_ch = 32 # 32, 16
+    fold = 3 # 0~3
+    scr = 'manual'
+    temp = 1.0
     save_result = True
     """ Path """
-    data_dir = f'./examples/images/{name}/'
-    mask_dir = f'./examples/labels/{name}/full/'
-    df_path = f'./examples/labels/{name}/test.csv'
-    model_path = f'./logs/{name}/best_model.pth'
+    data_dir = f'/workspace/Dataset/examples/images/{name}/'
+    mask_dir = f'/workspace/Dataset/examples/labels/{name}/full/'
+    df_path = f'/workspace/Dataset/examples/labels/{name}/test.csv'
+    model_path = f'/workspace/scribble2label/logs/{name}/proj_ch{proj_ch}/fold{fold}_scr_{scr}/best_model.pth'#temp{int(temp*100):03d}/best_model.pth'
     """ Testing """
     input_size = 256
     batch_size = 1
@@ -31,7 +36,7 @@ class config:
 
 def inference_image(net, images):
     with torch.no_grad():
-        predictions = net(images)
+        predictions, projections = net(images)
         predictions = F.softmax(predictions, dim=1)
     return predictions.detach().cpu().numpy()
 
@@ -54,8 +59,14 @@ def inference(net, test_loader, save_dir=None):
 
 
 if __name__ == '__main__':
-    model = Unet(encoder_name='resnet50', encoder_weights='imagenet', decoder_use_batchnorm=True,
-                 decoder_attention_type='scse', classes=2, activation=None)
+    # model = Unet(encoder_name='resnet50', encoder_weights='imagenet', decoder_use_batchnorm=True,
+    #              decoder_attention_type='scse', classes=2, activation=None)
+    if config.name=='histopathology' or 'MoNuSeg':
+        model = model.UnetCustom(encoder_name='resnet34', encoder_weights='imagenet', projection_ch=config.proj_ch,
+                                decoder_attention_type='scse', activation=None, classes=2)
+    else:
+        model = model.UnetCustom(encoder_name='resnet50', encoder_weights='imagenet', projection_ch=config.proj_ch,
+                            decoder_attention_type='scse', activation=None, classes=2)
 
     checkpoint = torch.load(config.model_path, map_location=lambda storage, loc: storage)
     model.load_state_dict(checkpoint['model_state_dict'])
@@ -78,4 +89,4 @@ if __name__ == '__main__':
         save_dir = None
 
     iou, mdice = inference(model, test_loader, save_dir)
-    print(f'IoU: {iou:.4f}, mDice: {mdice:.4f}')
+    print(f'IoU: {iou}, mDice: {mdice}')

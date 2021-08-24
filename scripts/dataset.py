@@ -21,7 +21,8 @@ def get_transforms(input_size=256, need=('train', 'val')):
             A.ShiftScaleRotate(p=0.7),
             A.HorizontalFlip(p=0.5),
             A.VerticalFlip(p=0.5),
-            A.RandomBrightnessContrast(p=0.5),
+            A.ColorJitter(p=0.5),
+            # A.RandomBrightnessContrast(p=0.5),
             A.Normalize(p=1.0),
             ToTensorV2(p=1.0),
         ], p=1.0, additional_targets={'scr': 'mask', 'weight': 'mask'})
